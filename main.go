@@ -33,6 +33,7 @@ func scan(w http.ResponseWriter, r *http.Request) {
 			w.Write(data)
 			log.Printf("%s scan has been submitted against %s", t.Scantype, t.Network)
 			nmap.Run(t.Network, stype)
+			break
 		} else {
 			data, _ := json.Marshal("{'error':'Invalid scan type'}")
 			w.Header().Set("Content-Type", "application/json; charset=utf-8")
