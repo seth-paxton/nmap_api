@@ -2,4 +2,4 @@
 
 High Level Diagram
 
-![architecture](architecture.svg)
+![architecture](../docs/architecture/architecture.svg)
