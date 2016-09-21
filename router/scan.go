@@ -1,10 +1,11 @@
-package main
+package router
 
 import (
 	"encoding/json"
-	"github.com/seth-paxton/nmap_api/nmap"
 	"log"
 	"net/http"
+
+	"github.com/seth-paxton/nmap_api/scanner"
 )
 
 type scanOptions struct {
@@ -12,10 +13,9 @@ type scanOptions struct {
 	Network  string `json:"Network"`
 }
 
-func main() {
-	nmap.LookPath()
-	http.HandleFunc("/scan", scan)
-	http.ListenAndServe(":8080", nil)
+// URLs exposed to the user. 
+func ScanApi() {
+    http.HandleFunc("/scan", scan)
 }
 
 func scan(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +32,7 @@ func scan(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json; charset=utf-8")
 			w.Write(data)
 			log.Printf("%s scan has been submitted against %s", t.Scantype, t.Network)
-			nmap.Run(t.Network, stype)
+			scanner.Run(t.Network, stype)
 			break
 		} else {
 			data, _ := json.Marshal("{'error':'Invalid scan type'}")
